@@ -11,7 +11,7 @@ const SearchBar = () => {
       <Col>
         <Row>
           <Input
-            placeholder="¡Busca algo! ej: rock..."
+            placeholder="¡Busca algo! ej: iron..."
             size="large"
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}

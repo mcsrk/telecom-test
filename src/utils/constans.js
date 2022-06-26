@@ -84,4 +84,7 @@ export const contactList = {
 //               CONTENT                 //
 ///////////////////////////////////////////
 
-export const filterTypeButtons = [{ label: "Personajes", value: "characters" }];
+export const filterTypeButtons = [
+  { label: "Personajes", value: "characters" },
+  { label: "Comics", value: "comics" },
+];

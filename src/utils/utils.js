@@ -17,24 +17,20 @@ export const useDebouncedEffect = (effect, deps, delay) => {
 
 /**
  * @description
- * @param {Array} artists
+ * @param {Array} creators
  * @returns {Array}
  */
-export const renderArtists = (artists) =>
-  artists?.map((creator, i, arr) => {
-    const uri = creator?.uri;
-    const name = creator?.profile?.name;
-    return (
-      <div
-        key={"creator-last" + uri}
-        className="cursor-pointer hover:underline"
-        onClick={() => window.location.replace(uri)}
-      >
-        {name}
-        {i !== arr.length - 1 ? "," : ""}
-      </div>
-    );
-  });
+export const renderCreators = (creators) => {
+  return (
+    <div className="text-sm w-full text-left overflow-hidden whitespace-nowrap overflow-ellipsis">
+      {creators.map((creator, i, arr) => {
+        let ret = creator?.name;
+        let ending = i !== arr.length - 1 ? ", " : "";
+        return ret + ending;
+      })}
+    </div>
+  );
+};
 
 /**
  * @description
@@ -57,3 +53,18 @@ export const getBiggestImage = (covers) =>
     if (image.height > biggest.height) return image;
     return biggest;
   }, covers[0]);
+
+/**
+ * @description
+ * @param {Object} comic or Character info
+ * @returns {String}
+ */
+export const getThumbnail = (comicData) => {
+  let imageLink =
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+  if (comicData?.thumbnail.length !== 0) {
+    imageLink =
+      comicData?.thumbnail.path + "." + comicData?.thumbnail.extension;
+  }
+  return imageLink;
+};

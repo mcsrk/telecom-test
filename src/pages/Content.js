@@ -4,6 +4,7 @@ import { Layout } from "antd";
 // Components
 import CharacterList from "components/content/CharacterList";
 import SearchHero from "components/content/search/SearchHero";
+import ComicList from "components/content/ComicList";
 
 // Utils
 import MarvelContext from "context/marvelContext";
@@ -17,23 +18,27 @@ const ContentPage = () => {
   const [loading, setLoading] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [queryType, setQueryType] = useState("characters");
+  const [queryType, setQueryType] = useState("comics");
   const [totalCount, setTotalCount] = useState("0");
   const [offset, setOffset] = useState("0");
   const [limit, setLimit] = useState("0");
 
+  const [comics, setComics] = useState([]);
   const [characters, setCharacters] = useState([]);
 
   const isCharacters = queryType === "characters";
+  const isComics = queryType === "comics";
 
   // Generic fetching function for different API query types
   const fetchSearchData = async () => {
     const data = {
       params: {
         ...(isCharacters && {
-          nameStartsWith: searchTerm !== "" ? searchTerm : "rock",
+          nameStartsWith: searchTerm !== "" ? searchTerm : "iron",
         }),
-
+        ...(isComics && {
+          titleStartsWith: searchTerm !== "" ? searchTerm : "iron",
+        }),
         offset: offset,
         limit: limit,
       },
@@ -41,12 +46,13 @@ const ContentPage = () => {
     // Define a setter object based on
     // - possible client query types
     const setters = {
+      comics: setComics,
       characters: setCharacters,
     };
     setLoading(true);
     try {
       const searchRes = await getRequest(queryType, data);
-
+      console.log(searchRes.data.data.results);
       setters[queryType](searchRes.data.data.results);
       setTotalCount(searchRes.data.data.total);
     } catch (error) {
@@ -84,6 +90,7 @@ const ContentPage = () => {
       >
         <SearchHero />
         <div className="w-full pt-4 m-auto flex justify-center items-center">
+          {isComics && <ComicList loading={loading} comics={comics} />}
           {isCharacters && (
             <CharacterList loading={loading} characters={characters} />
           )}
