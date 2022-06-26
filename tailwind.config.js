@@ -9,10 +9,10 @@ module.exports = {
         hover: "#b2301e",
       },
       marvelbg: {
-        focusBtn: "#ff141c",
+        focusBtn: "#9f0013",
       },
       marvelPalette: {
-        primary: "#ED1D24",
+        primary: "#e62429",
       },
       trueGray: {
         darkest: "#171717",

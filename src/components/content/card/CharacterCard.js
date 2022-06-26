@@ -1,4 +1,5 @@
 import { Col, Row } from "antd";
+import { getThumbnail } from "utils/utils";
 
 // Components
 import GenericCard from "./GenericCard";
@@ -33,24 +34,12 @@ const renderComicsAppear = (number) => (
   </div>
 );
 
-const getImage = (characterData) => {
-  let imageLink =
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
-  if (characterData?.thumbnail.length !== 0) {
-    console.log(characterData);
-    imageLink =
-      characterData?.thumbnail.path + "." + characterData?.thumbnail.extension;
-  }
-  return imageLink;
-};
-
 const CharacterCard = ({ character }) => {
   const id = character?.id;
   const name = character?.name;
   const uri = character?.urls[1].url;
-  const avatar = getImage(character);
+  const avatar = getThumbnail(character);
   const comicsAppear = character?.comics.available;
-  console.log(comicsAppear);
 
   return (
     <GenericCard id={"personaje-" + id}>
