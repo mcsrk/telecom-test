@@ -17,14 +17,6 @@ const SearchBar = () => {
             value={searchTerm}
           />
         </Row>
-        <Row>
-          <button
-            value={searchTerm}
-            className={`mx-auto py-2 px-4 mt-2 cursor-pointer rounded-3xl shadow-xl text-center text-white bg-marvelPalette-primary hover:bg-marveltxt-hover`}
-          >
-            Buscar
-          </button>
-        </Row>
       </Col>
     </Affix>
   );

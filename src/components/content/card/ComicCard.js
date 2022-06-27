@@ -6,7 +6,7 @@ import { getThumbnail, renderCreators } from "utils/utils";
 // Components
 import GenericCard from "./GenericCard";
 
-const renderAlbumAvatar = (cover) => (
+const renderComicCover = (cover) => (
   <Tooltip color={"#FF452B"}>
     <div
       onClick={() => window.open(cover, "_blank").focus()}
@@ -21,7 +21,7 @@ const renderAlbumAvatar = (cover) => (
   </Tooltip>
 );
 
-const renderTrackName = (name, link) => (
+const renderName = (name, link) => (
   <div
     className="w-full text-xl text-left overflow-hidden whitespace-nowrap overflow-ellipsis font-bold text-black hover:underline cursor-pointer hover:text-marveltxt-hover"
     onClick={() => window.location.replace(link)}
@@ -58,15 +58,16 @@ const ComicCard = ({ comicInfo }) => {
   const comicLink = comicInfo?.uri;
 
   return (
-    <GenericCard id={"comic-" + id}>
+    <GenericCard id={"comic-" + id} heigth={170}>
       {/* thumbnail */}
-      <Col span={7}>{renderAlbumAvatar(image)}</Col>
-      {/* title & artists */}
-      <Col span={17} className=" text-marveltxt-button">
-        <Row>{renderTrackName(name, comicLink)}</Row>
-        <Row>{renderCreators(comicInfo?.creators?.items)}</Row>
-        {/* price */}
-        <Row className="flex ">{renderPrices(comicInfo)}</Row>
+      <Col span={7}>{renderComicCover(image)}</Col>
+
+      <Col span={17} className=" flex align-top h-full">
+        <Row className="h-1/4">{renderName(name, comicLink)}</Row>
+        <Row className="h-1/2">
+          {renderCreators(comicInfo?.creators?.items)}
+        </Row>
+        <Row className="flex h-1/4">{renderPrices(comicInfo)}</Row>
       </Col>
     </GenericCard>
   );

@@ -4,21 +4,21 @@ import { getThumbnail } from "utils/utils";
 // Components
 import GenericCard from "./GenericCard";
 
-const renderArtistAvatar = (cover) => (
+const renderCharacterImage = (image) => (
   <div className="mx-auto w-32 rounded-lg shadow-sm border-2 border-solid border-transparent hover:border-marvelPalette-primary hover:shadow-lg cursor-pointer select-none">
     <img
       className="object-cover w-full h-32 rounded-lg"
       alt="artist-avatar"
       src={
-        cover ??
+        image ??
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
       }
-      onClick={() => window.open(cover, "_blank").focus()}
+      onClick={() => window.open(image, "_blank").focus()}
     />
   </div>
 );
 
-const renderArtistName = (name, link) => (
+const renderCharacterName = (name, link) => (
   <div
     className="text-center mx-auto overflow-hidden whitespace-nowrap overflow-ellipsis font-bold text-black hover:underline cursor-pointer hover:text-marveltxt-hover"
     onClick={() => window.open(link, "_blank").focus()}
@@ -44,8 +44,8 @@ const CharacterCard = ({ character }) => {
   return (
     <GenericCard id={"personaje-" + id}>
       <Col className="py-2">
-        <Row>{renderArtistAvatar(avatar)}</Row>
-        <Row>{renderArtistName(name, uri)}</Row>
+        <Row>{renderCharacterImage(avatar)}</Row>
+        <Row>{renderCharacterName(name, uri)}</Row>
         <Row>{renderComicsAppear(comicsAppear)}</Row>
       </Col>
     </GenericCard>

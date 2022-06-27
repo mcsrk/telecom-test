@@ -23,6 +23,8 @@ export const useDebouncedEffect = (effect, deps, delay) => {
 export const renderCreators = (creators) => {
   return (
     <div className="text-sm w-full text-left overflow-hidden whitespace-nowrap overflow-ellipsis">
+      Creadores:
+      <br />
       {creators.map((creator, i, arr) => {
         let ret = creator?.name;
         let ending = i !== arr.length - 1 ? ", " : "";
