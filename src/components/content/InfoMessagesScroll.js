@@ -22,7 +22,7 @@ const InfoMessagesScroll = ({ loading, error, noResults, hasMore }) => {
           type="warning"
         />
       )}
-      {!hasMore && !noResults && (
+      {!hasMore && !noResults && !loading && (
         <div className="text-center h-10">
           <Divider plain> Esto es todo 🤐</Divider>
         </div>
