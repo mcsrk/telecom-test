@@ -6,7 +6,12 @@ import MarvelContext from "context/marvelContext";
 // Consts
 import { filterTypeButtons } from "utils/constans";
 
-const getOptionButtons = (queryType, setQueryType) => {
+const getOptionButtons = (
+  queryType,
+  setQueryType,
+  setIsCharacters,
+  setIsComics
+) => {
   const optionButtons = filterTypeButtons.map((e) => {
     const active = e.value === queryType;
     return (
@@ -17,7 +22,11 @@ const getOptionButtons = (queryType, setQueryType) => {
             ? "bg-marvelbg-focusBtn text-white"
             : "bg-white hover:bg-gray-100 hover:text-marveltxt-button"
         } `}
-        onClick={() => setQueryType(e.value)}
+        onClick={() => {
+          setQueryType(e.value);
+          setIsCharacters(e.value === "characters");
+          setIsComics(e.value === "comics");
+        }}
       >
         {e.label}
       </span>
@@ -27,10 +36,11 @@ const getOptionButtons = (queryType, setQueryType) => {
 };
 
 const FilterType = () => {
-  const { queryType, setQueryType } = useContext(MarvelContext);
+  const { queryType, setQueryType, setIsCharacters, setIsComics } =
+    useContext(MarvelContext);
   return (
     <div className="w-60 sm:w-96 m-6 bg-white shadow-md rounded-3xl flex justify-between">
-      {getOptionButtons(queryType, setQueryType)}
+      {getOptionButtons(queryType, setQueryType, setIsCharacters, setIsComics)}
     </div>
   );
 };

@@ -4,18 +4,24 @@ export default createContext({
   // States
   searchTerm: null,
   queryType: null,
+
   // Pagination
   totalCount: null,
-  offset: null,
+  pageNumber: null,
   limit: null,
+
+  // Logic
+  isCharacters: null,
+  isComics: null,
 
   // Setters
   setSearchTerm: () => {},
   setQueryType: () => {},
 
   setTotalCount: () => {},
-  setOffset: () => {},
+  setPageNumber: () => {},
   setLimit: () => {},
 
-  onSearch: () => {},
+  setIsComics: () => {},
+  setIsCharacters: () => {},
 });

@@ -18,6 +18,7 @@ axiosClient.interceptors.request.use((config) => {
 });
 
 export function getRequest(URL, payload) {
+  console.log({ URL, payload });
   return axiosClient.get(`/${URL}`, payload).then((response) => response);
 }
 

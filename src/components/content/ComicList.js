@@ -1,42 +1,63 @@
 import { List } from "antd";
-import { useMemo, useContext, useEffect } from "react";
+import { useMemo, useContext, useRef, useCallback } from "react";
 
-// Utils
+// Context
 import MarvelContext from "context/marvelContext";
+
+// Custom hooks
+import useMarvelAPISearch from "hooks/useMarvelAPISearch";
 
 // Components
 import ComicCard from "./card/ComicCard";
+import InfoMessagesScroll from "./InfoMessagesScroll";
 
-const ComicList = ({ loading, comics }) => {
-  const { totalCount, limit, setOffset, setLimit } = useContext(MarvelContext);
+const ComicList = () => {
+  const { setPageNumber } = useContext(MarvelContext);
+  const { loading, error, comics, hasMore, noResults } = useMarvelAPISearch();
 
-  useEffect(() => {
-    setLimit("10");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const observer = useRef();
+  const triggerNextPageEleRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNumber((prevPage) => prevPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore, setPageNumber]
+  );
 
   return useMemo(
     () => (
       <List
-        loading={loading}
         className="mx-auto mt-12 max-w-max rounded-md shadow-lg bg-white custom-list"
         size="small"
+        footer={
+          <InfoMessagesScroll
+            loading={loading}
+            error={error}
+            noResults={noResults}
+            hasMore={hasMore}
+          />
+        }
         dataSource={comics}
-        renderItem={(comic) => <ComicCard comicInfo={comic} />}
-        pagination={{
-          onChange: (page) => {
-            setOffset(limit * (page - 1));
-          },
-          pageSize: limit,
-          showSizeChanger: false,
-          total: totalCount,
-          size: "small",
-          className: "text-center",
+        renderItem={(comic, index) => {
+          if (comics.length - 5 === index + 1) {
+            return (
+              <div ref={triggerNextPageEleRef} key={comic?.id + "ref"}>
+                <ComicCard comicInfo={comic} />
+              </div>
+            );
+          } else {
+            return <ComicCard comicInfo={comic} />;
+          }
         }}
       />
     ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [loading, comics, limit]
+    [comics, loading, triggerNextPageEleRef, hasMore, noResults, error]
   );
 };
 export default ComicList;
