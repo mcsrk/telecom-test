@@ -14,7 +14,7 @@ import InfoMessagesScroll from "./InfoMessagesScroll";
 const CharacterList = () => {
   const { setPageNumber } = useContext(MarvelContext);
   const { loading, error, characters, hasMore, noResults } =
-    useMarvelAPISearch();
+    useMarvelAPISearch("characters");
 
   const observer = useRef();
   const triggerNextPageEleRef = useCallback(
@@ -33,41 +33,40 @@ const CharacterList = () => {
 
   return useMemo(
     () => (
-      <>
-        <List
-          className="mx-auto mt-12 w-3/5 rounded-md shadow-lg  custom-list bg-white custom-list"
-          size="small"
-          footer={
-            <InfoMessagesScroll
-              loading={loading}
-              error={error}
-              noResults={noResults}
-              hasMore={hasMore}
-            />
+      <List
+        className="mx-auto mt-12 max-w-3xl rounded-md shadow-lg custom-list bg-white custom-list"
+        style={{ overflow: "auto", height: "500px" }}
+        size="small"
+        footer={
+          <InfoMessagesScroll
+            loading={loading}
+            error={error}
+            noResults={noResults}
+            hasMore={hasMore}
+          />
+        }
+        grid={{
+          gutter: 16,
+          xs: 1,
+          sm: 2,
+          md: 2,
+          lg: 2,
+          xl: 2,
+          xxl: 2,
+        }}
+        dataSource={characters}
+        renderItem={(character, index) => {
+          if (characters.length - 8 === index + 1) {
+            return (
+              <div ref={triggerNextPageEleRef} key={character?.id + "ref"}>
+                <CharacterCard character={character} />
+              </div>
+            );
+          } else {
+            return <CharacterCard character={character} />;
           }
-          grid={{
-            gutter: 16,
-            xs: 1,
-            sm: 2,
-            md: 2,
-            lg: 3,
-            xl: 4,
-            xxl: 4,
-          }}
-          dataSource={characters}
-          renderItem={(character, index) => {
-            if (characters.length - 5 === index + 1) {
-              return (
-                <div ref={triggerNextPageEleRef} key={character?.id + "ref"}>
-                  <CharacterCard character={character} />
-                </div>
-              );
-            } else {
-              return <CharacterCard character={character} />;
-            }
-          }}
-        />
-      </>
+        }}
+      />
     ),
     [characters, loading, triggerNextPageEleRef, hasMore, noResults, error]
   );
