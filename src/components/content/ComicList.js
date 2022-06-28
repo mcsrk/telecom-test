@@ -11,9 +11,10 @@ import useMarvelAPISearch from "hooks/useMarvelAPISearch";
 import ComicCard from "./card/ComicCard";
 import InfoMessagesScroll from "./InfoMessagesScroll";
 
-const ComicList = () => {
+const ComicList = ({ height = 500 }) => {
   const { setPageNumber } = useContext(MarvelContext);
-  const { loading, error, comics, hasMore, noResults } = useMarvelAPISearch();
+  const { loading, error, comics, hasMore, noResults } =
+    useMarvelAPISearch("comics");
 
   const observer = useRef();
   const triggerNextPageEleRef = useCallback(
@@ -34,6 +35,7 @@ const ComicList = () => {
     () => (
       <List
         className="mx-auto mt-12 max-w-max rounded-md shadow-lg bg-white custom-list"
+        style={{ overflow: "auto", height: height + "px" }}
         size="small"
         footer={
           <InfoMessagesScroll
@@ -45,7 +47,7 @@ const ComicList = () => {
         }
         dataSource={comics}
         renderItem={(comic, index) => {
-          if (comics.length - 5 === index + 1) {
+          if (comics.length - 8 === index + 1) {
             return (
               <div ref={triggerNextPageEleRef} key={comic?.id + "ref"}>
                 <ComicCard comicInfo={comic} />

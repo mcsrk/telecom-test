@@ -3,7 +3,7 @@ import marvelContext from "context/marvelContext";
 import { useContext, useEffect, useState } from "react";
 import { useDebouncedEffect } from "utils/utils";
 
-export default function useCharacterSearch() {
+export default function useCharacterSearch(queryType) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -13,7 +13,6 @@ export default function useCharacterSearch() {
   const [hasMore, setHasMore] = useState(false);
   const [noResults, setNoResults] = useState(false);
   const {
-    queryType,
     searchTerm,
     limit,
     pageNumber,

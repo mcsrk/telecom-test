@@ -21,17 +21,25 @@ export const useDebouncedEffect = (effect, deps, delay) => {
  * @returns {Array}
  */
 export const renderCreators = (creators) => {
-  return (
-    <div className="text-sm w-full text-left overflow-hidden whitespace-nowrap overflow-ellipsis">
-      Creadores:
-      <br />
-      {creators.map((creator, i, arr) => {
-        let ret = creator?.name;
-        let ending = i !== arr.length - 1 ? ", " : "";
-        return ret + ending;
-      })}
-    </div>
-  );
+  if (creators.length) {
+    return (
+      <div className="text-sm w-full text-left overflow-hidden whitespace-nowrap overflow-ellipsis">
+        Creadores:
+        <br />
+        {creators.map((creator, i, arr) => {
+          let ret = creator?.name;
+          let ending = i !== arr.length - 1 ? ", " : "";
+          return ret + ending;
+        })}
+      </div>
+    );
+  } else {
+    return (
+      <div className="text-sm w-full text-left overflow-hidden whitespace-nowrap overflow-ellipsis">
+        Sin creadores
+      </div>
+    );
+  }
 };
 
 /**
@@ -64,9 +72,9 @@ export const getBiggestImage = (covers) =>
 export const getThumbnail = (comicData) => {
   let imageLink =
     "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
-  if (comicData?.thumbnail.length !== 0) {
+  if (comicData?.thumbnail?.length !== 0) {
     imageLink =
-      comicData?.thumbnail.path + "." + comicData?.thumbnail.extension;
+      comicData?.thumbnail?.path + "." + comicData?.thumbnail?.extension;
   }
   return imageLink;
 };

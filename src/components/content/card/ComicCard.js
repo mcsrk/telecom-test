@@ -21,11 +21,8 @@ const renderComicCover = (cover) => (
   </Tooltip>
 );
 
-const renderName = (name, link) => (
-  <div
-    className="w-full text-xl text-left overflow-hidden whitespace-nowrap overflow-ellipsis font-bold text-black hover:underline cursor-pointer hover:text-marveltxt-hover"
-    onClick={() => window.location.replace(link)}
-  >
+const renderName = (name) => (
+  <div className="w-full text-xl text-left overflow-hidden whitespace-nowrap overflow-ellipsis font-bold text-black  ">
     {name}
   </div>
 );
@@ -55,15 +52,16 @@ const ComicCard = ({ comicInfo }) => {
   const image = getThumbnail(comicInfo);
   const id = comicInfo?.id;
   const name = comicInfo?.title;
-  const comicLink = comicInfo?.uri;
 
   return (
     <GenericCard id={"comic-" + id} heigth={170}>
       {/* thumbnail */}
-      <Col span={7}>{renderComicCover(image)}</Col>
+      <Col xs={10} md={8}>
+        {renderComicCover(image)}
+      </Col>
 
-      <Col span={17} className=" flex align-top h-full">
-        <Row className="h-1/4">{renderName(name, comicLink)}</Row>
+      <Col xs={12} md={16} className=" flex align-top h-full">
+        <Row className="h-1/4">{renderName(name)}</Row>
         <Row className="h-1/2">
           {renderCreators(comicInfo?.creators?.items)}
         </Row>

@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 export default createContext({
-  // States
+  // Query states
   searchTerm: null,
   queryType: null,
 
@@ -14,6 +14,9 @@ export default createContext({
   isCharacters: null,
   isComics: null,
 
+  // Selected Character
+  selectedCharacter: null,
+
   // Setters
   setSearchTerm: () => {},
   setQueryType: () => {},
@@ -24,4 +27,6 @@ export default createContext({
 
   setIsComics: () => {},
   setIsCharacters: () => {},
+
+  setSelectedCharacter: () => {},
 });

@@ -1,11 +1,17 @@
 import { Col, Row } from "antd";
+import { useContext } from "react";
+
+// Context
+import marvelContext from "context/marvelContext";
+
+// Utils
 import { getThumbnail } from "utils/utils";
 
 // Components
 import GenericCard from "./GenericCard";
 
 const renderCharacterImage = (image) => (
-  <div className="mx-auto w-32 rounded-lg shadow-sm border-2 border-solid border-transparent hover:border-marvelPalette-primary hover:shadow-lg cursor-pointer select-none">
+  <div className="mx-auto w-32 rounded-lg shadow-sm border-2 border-solid border-transparent hover:border-marvelPalette-primary hover:shadow-lg select-none">
     <img
       className="object-cover w-full h-32 rounded-lg"
       alt="artist-avatar"
@@ -13,16 +19,12 @@ const renderCharacterImage = (image) => (
         image ??
         "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
       }
-      onClick={() => window.open(image, "_blank").focus()}
     />
   </div>
 );
 
 const renderCharacterName = (name, link) => (
-  <div
-    className="text-center mx-auto overflow-hidden whitespace-nowrap overflow-ellipsis font-bold text-black hover:underline cursor-pointer hover:text-marveltxt-hover"
-    onClick={() => window.open(link, "_blank").focus()}
-  >
+  <div className="text-center mx-auto overflow-hidden whitespace-nowrap overflow-ellipsis font-bold text-black ">
     {name}
   </div>
 );
@@ -41,9 +43,15 @@ const CharacterCard = ({ character }) => {
   const avatar = getThumbnail(character);
   const comicsAppear = character?.comics.available;
 
+  const { setSelectedCharacter } = useContext(marvelContext);
+
+  const handleSelect = () => {
+    setSelectedCharacter(character);
+  };
+
   return (
     <GenericCard id={"personaje-" + id}>
-      <Col className="py-2">
+      <Col className="py-2 cursor-pointer" onClick={handleSelect}>
         <Row>{renderCharacterImage(avatar)}</Row>
         <Row>{renderCharacterName(name, uri)}</Row>
         <Row>{renderComicsAppear(comicsAppear)}</Row>

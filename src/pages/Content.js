@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Layout } from "antd";
+import { useEffect, useState } from "react";
+import { Col, Layout, Row } from "antd";
 
 // Components
 import CharacterList from "components/content/CharacterList";
@@ -8,6 +8,7 @@ import ComicList from "components/content/ComicList";
 
 // Context
 import MarvelContext from "context/marvelContext";
+import CharacterDetails from "components/content/CharacterDetails";
 
 // Consts
 const { Content } = Layout;
@@ -22,6 +23,17 @@ const ContentPage = () => {
   const [isCharacters, setIsCharacters] = useState(true);
   const [isComics, setIsComics] = useState(false);
 
+  const [selectedCharacter, setSelectedCharacter] = useState(true);
+  const [tableSpam, setTableSpam] = useState(24);
+
+  useEffect(() => {
+    if (selectedCharacter) {
+      setTableSpam(10);
+    } else {
+      setTableSpam(24);
+    }
+  }, [selectedCharacter]);
+
   return (
     <Content className="w-full pb-14">
       <MarvelContext.Provider
@@ -33,7 +45,9 @@ const ContentPage = () => {
           limit,
           isCharacters,
           isComics,
+          selectedCharacter,
 
+          setSelectedCharacter,
           setSearchTerm,
           setQueryType,
           setTotalCount,
@@ -46,7 +60,19 @@ const ContentPage = () => {
         <SearchHero />
         <div className="w-full pt-4 m-auto flex justify-center items-center">
           {isComics && <ComicList />}
-          {isCharacters && <CharacterList />}
+          {isCharacters && (
+            <Row style={{ width: "90%" }} gutter={[16, 0]}>
+              <Col span={tableSpam} className="mx-auto">
+                <CharacterList />
+              </Col>
+
+              {selectedCharacter && (
+                <Col xs={24} lg={14}>
+                  <CharacterDetails />
+                </Col>
+              )}
+            </Row>
+          )}
         </div>
       </MarvelContext.Provider>
     </Content>
