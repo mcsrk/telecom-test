@@ -2,6 +2,11 @@
 
 Jhon Fredy Acosta Murillo
 
+Simple app that allow to infinite scroll all the query results for comics and characaters offered by MarvelAPI. 
+When selected a character it shows his details and comics appearences.
+
+Also, has fake login with any email that contains substring `@telecom` and password that contains `123` 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
