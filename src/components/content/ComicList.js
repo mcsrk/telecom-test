@@ -5,16 +5,18 @@ import { useMemo, useContext, useRef, useCallback } from "react";
 import MarvelContext from "context/marvelContext";
 
 // Custom hooks
-import useMarvelAPISearch from "hooks/useMarvelAPISearch";
+import useComicSearch from "hooks/useComicSearch";
 
 // Components
 import ComicCard from "./card/ComicCard";
 import InfoMessagesScroll from "./InfoMessagesScroll";
 
 const ComicList = ({ height = 500 }) => {
-  const { setPageNumber } = useContext(MarvelContext);
-  const { loading, error, comics, hasMore, noResults } =
-    useMarvelAPISearch("comics");
+  const { setComicPageNumber, selectedCharacter } = useContext(MarvelContext);
+
+  const { loading, error, comics, hasMore, noResults } = useComicSearch(
+    selectedCharacter ? `characters/${selectedCharacter?.id}/comics` : "comics"
+  );
 
   const observer = useRef();
   const triggerNextPageEleRef = useCallback(
@@ -23,12 +25,12 @@ const ComicList = ({ height = 500 }) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPage) => prevPage + 1);
+          setComicPageNumber((prevPage) => prevPage + 1);
         }
       });
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, setPageNumber]
+    [loading, hasMore, setComicPageNumber]
   );
 
   return useMemo(
@@ -59,7 +61,7 @@ const ComicList = ({ height = 500 }) => {
         }}
       />
     ),
-    [comics, loading, triggerNextPageEleRef, hasMore, noResults, error]
+    [comics, loading, triggerNextPageEleRef, hasMore, noResults, error, height]
   );
 };
 export default ComicList;

@@ -5,16 +5,38 @@ import { useContext } from "react";
 import MarvelContext from "context/marvelContext";
 
 const SearchBar = () => {
-  const { searchTerm, setSearchTerm } = useContext(MarvelContext);
+  const {
+    queryType,
+
+    comicSearchTerm,
+    setComicSearchTerm,
+    characterSearchTerm,
+    setCharacterSearchTerm,
+  } = useContext(MarvelContext);
+
+  const handleChange = (e) => {
+    if (queryType === "characters") {
+      setCharacterSearchTerm(e.target.value);
+    } else if (queryType === "comics") {
+      setComicSearchTerm(e.target.value);
+    }
+  };
+
   return (
     <Affix className="w-60 sm:w-96 mb-6 mx-auto" offsetTop={10}>
       <Col>
         <Row>
           <Input
-            placeholder="¡Busca algo! ej: iron..."
+            placeholder={
+              queryType === "characters"
+                ? "¡Busca un personaje! ej: iron..."
+                : "¡Busca un comic! ej: black..."
+            }
             size="large"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTerm}
+            onChange={handleChange}
+            value={
+              queryType === "characters" ? characterSearchTerm : comicSearchTerm
+            }
           />
         </Row>
       </Col>

@@ -5,16 +5,16 @@ import { List } from "antd";
 import MarvelContext from "context/marvelContext";
 
 // Custom hooks
-import useMarvelAPISearch from "hooks/useMarvelAPISearch";
+import useCharacterSearch from "hooks/useCharacterSearch";
 
 // Components
 import CharacterCard from "./card/CharacterCard";
 import InfoMessagesScroll from "./InfoMessagesScroll";
 
 const CharacterList = () => {
-  const { setPageNumber } = useContext(MarvelContext);
+  const { setCharacterPageNumber } = useContext(MarvelContext);
   const { loading, error, characters, hasMore, noResults } =
-    useMarvelAPISearch("characters");
+    useCharacterSearch("characters");
 
   const observer = useRef();
   const triggerNextPageEleRef = useCallback(
@@ -23,12 +23,12 @@ const CharacterList = () => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
-          setPageNumber((prevPage) => prevPage + 1);
+          setCharacterPageNumber((prevPage) => prevPage + 1);
         }
       });
       if (node) observer.current.observe(node);
     },
-    [loading, hasMore, setPageNumber]
+    [loading, hasMore, setCharacterPageNumber]
   );
 
   return useMemo(
@@ -50,13 +50,13 @@ const CharacterList = () => {
           xs: 1,
           sm: 2,
           md: 2,
-          lg: 2,
-          xl: 2,
-          xxl: 2,
+          lg: 3,
+          xl: 3,
+          xxl: 3,
         }}
         dataSource={characters}
         renderItem={(character, index) => {
-          if (characters.length - 8 === index + 1) {
+          if (characters.length - 9 === index + 1) {
             return (
               <div ref={triggerNextPageEleRef} key={character?.id + "ref"}>
                 <CharacterCard character={character} />

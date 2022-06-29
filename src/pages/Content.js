@@ -14,16 +14,21 @@ import CharacterDetails from "components/content/CharacterDetails";
 const { Content } = Layout;
 
 const ContentPage = () => {
-  const [searchTerm, setSearchTerm] = useState(null);
   const [queryType, setQueryType] = useState("characters");
-  const [totalCount, setTotalCount] = useState("0");
-  const [pageNumber, setPageNumber] = useState(1);
-  const [limit, setLimit] = useState(20);
-
   const [isCharacters, setIsCharacters] = useState(true);
   const [isComics, setIsComics] = useState(false);
+  const [selectedCharacter, setSelectedCharacter] = useState(false);
 
-  const [selectedCharacter, setSelectedCharacter] = useState(true);
+  const [comicSearchTerm, setComicSearchTerm] = useState(null);
+  const [comicTotalCount, setComicTotalCount] = useState("0");
+  const [comicPageNumber, setComicPageNumber] = useState(1);
+  const [comicLimit, setComicLimit] = useState(20);
+
+  const [characterSearchTerm, setCharacterSearchTerm] = useState(null);
+  const [characterTotalCount, setCharacterTotalCount] = useState("0");
+  const [characterPageNumber, setCharacterPageNumber] = useState(1);
+  const [characterLimit, setCharacterLimit] = useState(18);
+
   const [tableSpam, setTableSpam] = useState(24);
 
   useEffect(() => {
@@ -38,30 +43,44 @@ const ContentPage = () => {
     <Content className="w-full pb-14">
       <MarvelContext.Provider
         value={{
-          searchTerm,
           queryType,
-          totalCount,
-          pageNumber,
-          limit,
           isCharacters,
           isComics,
           selectedCharacter,
 
-          setSelectedCharacter,
-          setSearchTerm,
           setQueryType,
-          setTotalCount,
-          setPageNumber,
-          setLimit,
+          setSelectedCharacter,
           setIsComics,
           setIsCharacters,
+
+          //Comics
+          comicSearchTerm,
+          comicTotalCount,
+          comicPageNumber,
+          comicLimit,
+
+          setComicSearchTerm,
+          setComicTotalCount,
+          setComicPageNumber,
+          setComicLimit,
+
+          //Characters
+          characterSearchTerm,
+          characterTotalCount,
+          characterPageNumber,
+          characterLimit,
+
+          setCharacterSearchTerm,
+          setCharacterTotalCount,
+          setCharacterPageNumber,
+          setCharacterLimit,
         }}
       >
         <SearchHero />
-        <div className="w-full pt-4 m-auto flex justify-center items-center">
+        <Col className="w-full p-2 m-auto flex justify-center items-center  ">
           {isComics && <ComicList />}
           {isCharacters && (
-            <Row style={{ width: "90%" }} gutter={[16, 0]}>
+            <Row gutter={[16, 0]} className="flex justify-center">
               <Col span={tableSpam} className="mx-auto">
                 <CharacterList />
               </Col>
@@ -73,7 +92,7 @@ const ContentPage = () => {
               )}
             </Row>
           )}
-        </div>
+        </Col>
       </MarvelContext.Provider>
     </Content>
   );

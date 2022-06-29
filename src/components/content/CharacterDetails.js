@@ -32,7 +32,7 @@ const comicsListTitle = () => (
       strong={true}
       className="text-center text-lg sm:text-xl mx-auto mb-2 text-trueGray-dark"
     >
-      Comics en los que aparece
+      Comics relacionados
     </Text>
   </Divider>
 );
@@ -70,6 +70,7 @@ const renderDescription = (selectedCharacter) => (
 const CharacterDetails = () => {
   const { selectedCharacter } = useContext(marvelContext);
   console.log(selectedCharacter);
+
   const name = selectedCharacter?.name;
   const avatar = getThumbnail(selectedCharacter);
   const comicsAppear = selectedCharacter?.comics?.available;
@@ -86,7 +87,7 @@ const CharacterDetails = () => {
       </Col>
       <Col xs={24} md={15}>
         <Row>{comicsListTitle()}</Row>
-        <Row className="text-center">
+        <Row className="flex justify-center">
           <ComicList height={400} />
         </Row>
       </Col>

@@ -17,10 +17,9 @@ const InfoMessagesScroll = ({ loading, error, noResults, hasMore }) => {
         />
       )}
       {noResults && (
-        <Alert
-          message={"No hay resultados para esta búsqueda."}
-          type="warning"
-        />
+        <div className="text-center h-10">
+          <Divider plain> Esto es todo 🤐</Divider>
+        </div>
       )}
       {!hasMore && !noResults && !loading && (
         <div className="text-center h-10">

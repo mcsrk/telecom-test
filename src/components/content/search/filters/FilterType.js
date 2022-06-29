@@ -10,7 +10,10 @@ const getOptionButtons = (
   queryType,
   setQueryType,
   setIsCharacters,
-  setIsComics
+  setIsComics,
+  setSelectedCharacter,
+  setCharacterSearchTerm,
+  setComicSearchTerm
 ) => {
   const optionButtons = filterTypeButtons.map((e) => {
     const active = e.value === queryType;
@@ -26,6 +29,10 @@ const getOptionButtons = (
           setQueryType(e.value);
           setIsCharacters(e.value === "characters");
           setIsComics(e.value === "comics");
+          setSelectedCharacter(null);
+          // clear search term
+          setCharacterSearchTerm("");
+          setComicSearchTerm("");
         }}
       >
         {e.label}
@@ -36,11 +43,26 @@ const getOptionButtons = (
 };
 
 const FilterType = () => {
-  const { queryType, setQueryType, setIsCharacters, setIsComics } =
-    useContext(MarvelContext);
+  const {
+    queryType,
+    setQueryType,
+    setIsCharacters,
+    setIsComics,
+    setSelectedCharacter,
+    setCharacterSearchTerm,
+    setComicSearchTerm,
+  } = useContext(MarvelContext);
   return (
     <div className="w-60 sm:w-96 m-6 bg-white shadow-md rounded-3xl flex justify-between">
-      {getOptionButtons(queryType, setQueryType, setIsCharacters, setIsComics)}
+      {getOptionButtons(
+        queryType,
+        setQueryType,
+        setIsCharacters,
+        setIsComics,
+        setSelectedCharacter,
+        setCharacterSearchTerm,
+        setComicSearchTerm
+      )}
     </div>
   );
 };
