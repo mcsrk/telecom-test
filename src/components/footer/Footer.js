@@ -109,7 +109,7 @@ const CustomFooter = () => {
         <div className="container text-center">
           <Row className="justify-between">
             <Col>
-              <p className="text-xs py-2">Hecho por Jhon Acosta</p>
+              <p className="text-xs py-2">Jhon Fredy Acosta Murillo</p>
             </Col>
             <Col>{renderSocialMediaList(mediaInfo)}</Col>
           </Row>

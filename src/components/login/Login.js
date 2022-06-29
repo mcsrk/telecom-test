@@ -63,7 +63,6 @@ const Login = ({ email, password, setEmail, setPassword, onPressLogin }) => {
               type="primary"
               htmlType="submit"
               className={"w-full rounded text-xs h-8"}
-              onClick={onPressLogin}
             >
               INGRESAR
             </Button>

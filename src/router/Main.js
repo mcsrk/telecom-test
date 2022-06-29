@@ -1,4 +1,4 @@
-import { BackTop, Layout, notification } from "antd";
+import { BackTop, Layout, message } from "antd";
 import { Switch, Route, Redirect } from "react-router-dom";
 
 // Components
@@ -22,19 +22,18 @@ const Main = () => {
     name: "Juan",
     surname: "Smith",
   };
-  const openNotificationWithIcon = (type) => {
-    notification[type]({
-      message: "No autorizado",
-      description: "Correo o contraseña incorrectos",
-    });
+
+  const errorMessage = (value) => {
+    message.error(value);
   };
 
   const onPressLogin = () => {
+    console.log("click");
     if (email.includes("@telecom") && password.includes("123")) {
       setLogin(true);
     } else {
       setLogin(false);
-      openNotificationWithIcon("error");
+      errorMessage(`Correo o contraseña incorrectos`);
     }
   };
 
